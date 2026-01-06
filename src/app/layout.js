@@ -20,7 +20,30 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <header
+          style={{
+            background: "pink",
+            margin: "8px",
+            padding: "5px",
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: "28px",
+          }}
+        >
+          Products Store
+        </header>
         {children}
+        <footer
+          style={{
+            background: "gray",
+            margin: "8px",
+            padding: "5px",
+            textAlign: "center",
+          }}
+        >
+          <h3>© 2026 Products Store </h3>
+          <p>Built with Next.js</p>
+        </footer>
       </body>
     </html>
   );
