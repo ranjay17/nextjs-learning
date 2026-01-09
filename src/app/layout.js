@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,10 @@ export const metadata = {
   description: "Simple Products Store built with Next.js",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -44,37 +48,48 @@ export default function RootLayout({ children }) {
               height={60}
               priority
             />
-            <h1
-              style={{
-                fontSize: "28px",
-                fontWeight: "bold",
-                margin: 0,
-              }}
-            >
+
+            <h1 style={{ fontSize: "28px", fontWeight: "bold" }}>
               Products Store
             </h1>
+
             <nav style={{ fontSize: "18px" }}>
               <Link href="/" style={{ marginRight: "15px" }}>
                 Home
               </Link>
-              <Link href="/products">Products</Link>
+
+              <Link href="/products" style={{ marginRight: "15px" }}>
+                Products
+              </Link>
+
+              {!token ? (
+                <Link href="/login">Login</Link>
+              ) : (
+                <form
+                  action="/api/logout"
+                  method="POST"
+                  style={{ display: "inline" }}
+                >
+                  <button
+                    type="submit"
+                    style={{
+                      background: "red",
+                      color: "white",
+                      border: "none",
+                      padding: "6px 12px",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Logout
+                  </button>
+                </form>
+              )}
             </nav>
           </div>
         </header>
-        <div>{children}</div>
-        <footer
-          style={{
-            background: "gray",
-            margin: "8px",
-            padding: "10px",
-            textAlign: "center",
-            borderRadius: "6px",
-            color: "white",
-          }}
-        >
-          <h3>© 2026 Products Store</h3>
-          <p>Built with Next.js</p>
-        </footer>
+
+        <main style={{ padding: "16px" }}>{children}</main>
       </body>
     </html>
   );
