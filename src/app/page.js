@@ -36,6 +36,12 @@ async function getProducts() {
   const data = await res.json();
   return data.products;
 }
+
+export const metadata = {
+  title: "Products Store - Home",
+};
+
+
 export default async function Home() {
   const products = await getProducts();
   return (
