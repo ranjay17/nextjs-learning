@@ -35,3 +35,6 @@
    - DummyJSON API
 
    - Cookies (Server Side)
+# Demo Credentials:
+   - Email: lbrainbow000@gmail.com
+   - Password: rainbow000
